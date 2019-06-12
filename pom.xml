@@ -11,7 +11,7 @@
 	<groupId>com.example.trains</groupId>
 	<artifactId>excercise</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>excercise</name>
+	<name>exercise</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
