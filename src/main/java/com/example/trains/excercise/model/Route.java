@@ -1,33 +1,25 @@
 package com.example.trains.excercise.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Route {
-    private String from;
 
-    private String to;
+    private List<Station> stations = new ArrayList<>();
 
-    private Long value;
+    private Long distance = 0L;
 
-    public String getFrom() {
-        return from;
+    public List<Station> getStations() {
+        return stations;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public Long getDistance() {
+        return distance;
     }
 
-    public String getTo() {
-        return to;
-    }
+    public void addStation(Station s, Long distance) {
+        this.stations.add(s);
+        distance += distance;
 
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public Long getValue() {
-        return value;
-    }
-
-    public void setValue(Long value) {
-        this.value = value;
     }
 }
