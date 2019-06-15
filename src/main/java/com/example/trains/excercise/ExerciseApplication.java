@@ -13,9 +13,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @SpringBootApplication
 public class ExerciseApplication implements CommandLineRunner {
+
+	private static final Logger log = Logger.getLogger(ExerciseApplication.class.getName());
 
 	private final DataLoaderService dataLoaderService;
 
@@ -36,10 +39,22 @@ public class ExerciseApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		if(!this.validateArgs(args)){
+			return;
+		}
+
 		List<String> mapFile = this.dataLoaderService.loadMapFile(args[0]);
 		AbstractValueGraph<Station, Long> graphMap = this.mapLoaderService.loadMapToGraphModel(mapFile);
 		Route bestRoute = this.explorerService.findBestRoute(graphMap, new Station(args[1]), new Station(args[2]));
 		this.routePrinterService.printRoute(bestRoute);
+	}
+
+	private boolean validateArgs(String... args){
+		if(args.length < 3){
+			log.severe("Usage: <pathToMap> <fromStation> <toStation>");
+			return false;
+		}
+		return true;
 	}
 
 	public static void main(String[] args) {
