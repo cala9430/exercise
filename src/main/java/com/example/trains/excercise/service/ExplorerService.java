@@ -25,6 +25,12 @@ public class ExplorerService {
     }
 
     private List<Route> findBestRoute(AbstractValueGraph<Station, Long> graphOfStations, Station from, Station to, Route actualRoute){
+        actualRoute.addStation(from, 0L);
+        if(graphOfStations.hasEdgeConnecting(from, to)) {
+
+        }else{
+        }
+
         return null;
     }
 }
