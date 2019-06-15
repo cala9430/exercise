@@ -19,7 +19,7 @@ public class Route {
 
     public void addStation(Station s, Long distance) {
         this.stations.add(s);
-        distance += distance;
+        this.distance += distance;
 
     }
 }

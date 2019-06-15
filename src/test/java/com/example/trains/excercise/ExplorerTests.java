@@ -25,13 +25,33 @@ public class ExplorerTests {
     private MapLoaderService mapLoaderService;
 
     @Test
-    public void testSimpleGraph(){
+    public void testSimpleStepGraph(){
         AbstractValueGraph<Station, Long> graphModel = mapLoaderService.loadMapToGraphModel(Arrays.asList("AB5", "AC9", "BC3"));
 
         Route bestRoute = explorerService.findBestRoute(graphModel, new Station("A"), new Station("C"));
 
         Assert.assertEquals(1, bestRoute.getStations().size());
 
+        long distance = bestRoute.getDistance();
+        Assert.assertEquals(9L, distance);
+    }
 
+    @Test
+    public void testTwoStepsGraph(){
+        AbstractValueGraph<Station, Long> graphModel = mapLoaderService.loadMapToGraphModel(Arrays.asList("AB5", "AC9", "BC3", "CD1"));
+
+        Route bestRoute = explorerService.findBestRoute(graphModel, new Station("A"), new Station("D"));
+
+        Assert.assertEquals(2, bestRoute.getStations().size());
+
+        long distance = bestRoute.getDistance();
+        Assert.assertEquals(10L, distance);
+    }
+
+    @Test(expected = Exception.class)
+    public void testNoRouteGraph(){
+        AbstractValueGraph<Station, Long> graphModel = mapLoaderService.loadMapToGraphModel(Arrays.asList("AB5", "AC9", "BC3","CD1"));
+
+        explorerService.findBestRoute(graphModel, new Station("B"), new Station("D"));
     }
 }

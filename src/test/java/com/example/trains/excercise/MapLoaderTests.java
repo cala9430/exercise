@@ -1,5 +1,6 @@
 package com.example.trains.excercise;
 
+import com.example.trains.excercise.exceptions.MalformedMapException;
 import com.example.trains.excercise.model.Station;
 import com.example.trains.excercise.service.MapLoaderService;
 import com.google.common.graph.AbstractValueGraph;
@@ -35,14 +36,12 @@ public class MapLoaderTests {
         Assert.assertEquals(2, aAdjacents.size());
     }
 
-    //TODO: throw custom exception
-    @Test(expected = RuntimeException.class)
+    @Test(expected = MalformedMapException.class)
     public void loadInvalidMap(){
         mapLoaderService.loadMapToGraphModel(Arrays.asList("AB5", "AC5", "9"));
     }
 
-    //TODO: throw custom exception
-    @Test(expected = NumberFormatException.class)
+    @Test(expected = MalformedMapException.class)
     public void loadInvalidDistanceMap(){
         mapLoaderService.loadMapToGraphModel(Arrays.asList("AB5", "AC5", "ABC"));
     }

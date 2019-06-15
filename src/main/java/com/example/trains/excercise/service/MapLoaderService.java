@@ -1,5 +1,6 @@
 package com.example.trains.excercise.service;
 
+import com.example.trains.excercise.exceptions.MalformedMapException;
 import com.example.trains.excercise.model.Route;
 import com.example.trains.excercise.model.Station;
 import com.google.common.graph.AbstractValueGraph;
@@ -26,13 +27,13 @@ public class MapLoaderService {
 
     private void addRouteToGraph(MutableValueGraph<Station, Long> valueGraph, String route) {
         if(StringUtils.length(route) != 3){
-            throw new RuntimeException(String.format("Malformed map of cities. Cannot parse %s",route));
+            throw new MalformedMapException(String.format("Malformed map of cities. Cannot parse %s",route));
         }
         Station stationFrom = new Station(route.substring(0,1));
         Station stationTo = new Station(route.substring(1,2));
 
         if(valueGraph.hasEdgeConnecting(stationFrom, stationTo)){
-            throw new RuntimeException(String.format("Malformed map of cities. Multiples distances for stations=[%s - %s]",stationFrom.getName(), stationTo.getName()));
+            throw new MalformedMapException(String.format("Malformed map of cities. Multiples distances for stations=[%s - %s]",stationFrom.getName(), stationTo.getName()));
         }
 
         Long distance = Long.parseLong(route.substring(2,3));
