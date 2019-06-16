@@ -1,11 +1,12 @@
 package com.example.trains.excercise.model;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Route {
 
-    private Set<Station> stations = new HashSet<>();
+    private Set<Station> stations = new LinkedHashSet<>();
 
     private Long distance = 0L;
 

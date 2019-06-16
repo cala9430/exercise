@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.logging.Logger;
 
-
+/**
+ * This service can be used to find best routes including additional stops.
+ */
 @Service
 public class PathFinderService {
 
@@ -28,12 +30,12 @@ public class PathFinderService {
      * @param to                Arriving station
      * @return                  Route containing a set of Stations and the total distance
      */
-    public Route findBestRoute(AbstractValueGraph<Station, Long> graphOfStations, Station from, Station to){
+    public Route findBestRoute(AbstractValueGraph<Station, Long> graphOfStations, Station from, Station to, Route currentRoute){
 
         validateInput(graphOfStations, from, to);
         log.info(String.format("Looking for best route: [%s -> %s]", from.getName(), to.getName()));
 
-        List<Route> possibleRoutes = this.findAllRoutes(graphOfStations, from, to);
+        List<Route> possibleRoutes = this.findAllRoutes(graphOfStations, from, to, currentRoute);
 
         log.info(String.format("Found %d routes from %s to %s", possibleRoutes.size(), from.getName(), to.getName()));
 
@@ -45,13 +47,14 @@ public class PathFinderService {
         return bestRoute;
     }
 
-    private List<Route> findAllRoutes(AbstractValueGraph<Station, Long> graphOfStations, Station from, Station to){
+    private List<Route> findAllRoutes(AbstractValueGraph<Station, Long> graphOfStations, Station from, Station to, Route currentRoute){
         List<Route> possibleRoutes = new ArrayList<>();
 
-        Route startingRoute = new Route();
-        startingRoute.addStation(from, 0L);
+        if(currentRoute.getStations().isEmpty()){
+            currentRoute.addStation(from, 0L);
+        }
 
-        this.recursive(graphOfStations, from, to, possibleRoutes, startingRoute);
+        this.recursive(graphOfStations, from, to, possibleRoutes, currentRoute);
 
         return possibleRoutes;
 

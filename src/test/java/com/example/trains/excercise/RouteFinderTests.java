@@ -44,7 +44,33 @@ public class RouteFinderTests {
 
         Assert.assertEquals(3, route.getStations().size());
 
-        Assert.assertEquals(17L, route.getDistance().longValue());
+        Assert.assertEquals(8L, route.getDistance().longValue());
+
+    }
+
+    @Test
+    public void findExerciseExamplesPathTest(){
+        AbstractValueGraph<Station, Long> graphModel =
+                mapLoaderService.loadMapToGraphModel(Arrays.asList("AB5", "BC4", "CD8", "DC8", "DE6", "AD5", "CE2", "EB3", "AE7"));
+
+        Route route = this.routeFinderService.findRoute(graphModel, Arrays.asList("A", "B", "C"));
+        Assert.assertEquals(3, route.getStations().size());
+        Assert.assertEquals(9L, route.getDistance().longValue());
+
+        route = this.routeFinderService.findRoute(graphModel, Arrays.asList("A", "D"));
+        Assert.assertEquals(2, route.getStations().size());
+        Assert.assertEquals(5L, route.getDistance().longValue());
+
+        route = this.routeFinderService.findRoute(graphModel, Arrays.asList("A", "D", "C"));
+        Assert.assertEquals(3, route.getStations().size());
+        Assert.assertEquals(13L, route.getDistance().longValue());
+
+        route = this.routeFinderService.findRoute(graphModel, Arrays.asList("A", "E", "B", "C", "D"));
+        Assert.assertEquals(5, route.getStations().size());
+        Assert.assertEquals(22L, route.getDistance().longValue());
+
+        route = this.routeFinderService.findRoute(graphModel, Arrays.asList("A", "E", "D"));
+        Assert.assertNull(route);
 
     }
 
