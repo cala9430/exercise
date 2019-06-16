@@ -3,7 +3,7 @@ package com.example.trains.excercise;
 import com.example.trains.excercise.model.Route;
 import com.example.trains.excercise.model.Station;
 import com.example.trains.excercise.service.DataLoaderService;
-import com.example.trains.excercise.service.ExplorerService;
+import com.example.trains.excercise.service.PathFinderService;
 import com.example.trains.excercise.service.MapLoaderService;
 import com.example.trains.excercise.service.RoutePrinterService;
 import com.google.common.graph.AbstractValueGraph;
@@ -24,16 +24,16 @@ public class ExerciseApplication implements CommandLineRunner {
 
 	private final MapLoaderService mapLoaderService;
 
-	private final ExplorerService explorerService;
+	private final PathFinderService pathFinderService;
 
 	private final RoutePrinterService routePrinterService;
 
 	@Autowired
 	public ExerciseApplication(DataLoaderService dataLoaderService, MapLoaderService mapLoaderService,
-							   ExplorerService explorerService, RoutePrinterService routePrinterService) {
+							   PathFinderService pathFinderService, RoutePrinterService routePrinterService) {
 		this.dataLoaderService = dataLoaderService;
 		this.mapLoaderService = mapLoaderService;
-		this.explorerService = explorerService;
+		this.pathFinderService = pathFinderService;
 		this.routePrinterService = routePrinterService;
 	}
 
@@ -45,7 +45,7 @@ public class ExerciseApplication implements CommandLineRunner {
 
 		List<String> mapFile = this.dataLoaderService.loadMapFile(args[0]);
 		AbstractValueGraph<Station, Long> graphMap = this.mapLoaderService.loadMapToGraphModel(mapFile);
-		Route bestRoute = this.explorerService.findBestRoute(graphMap, new Station(args[1]), new Station(args[2]));
+		Route bestRoute = this.pathFinderService.findBestRoute(graphMap, new Station(args[1]), new Station(args[2]));
 		this.routePrinterService.printRoute(bestRoute);
 	}
 
