@@ -1,7 +1,6 @@
 package com.example.trains.excercise.service;
 
 import com.example.trains.excercise.exceptions.MalformedMapException;
-import com.example.trains.excercise.model.Route;
 import com.example.trains.excercise.model.Station;
 import com.google.common.graph.AbstractValueGraph;
 import com.google.common.graph.ImmutableValueGraph;
@@ -11,17 +10,24 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class MapLoaderService {
 
+    private static final Logger log = Logger.getLogger(MapLoaderService.class.getName());
+
     public AbstractValueGraph<Station, Long> loadMapToGraphModel(List<String> mapOfStations){
+
+        log.info("Parsing list of stations and distances");
+
         MutableValueGraph<Station, Long> valueGraph =  ValueGraphBuilder.directed().build();
 
         mapOfStations.forEach(route -> {
             addRouteToGraph(valueGraph, route);
         });
 
+        log.info("Graph loaded");
         return ImmutableValueGraph.copyOf(valueGraph);
     }
 
@@ -37,6 +43,8 @@ public class MapLoaderService {
         }
 
         Long distance = Long.parseLong(route.substring(2,3));
+
+        log.info(String.format("Found new route: [%s -> %s = %d]", stationFrom.getName(), stationTo.getName(), distance));
         valueGraph.addNode(stationFrom);
         valueGraph.addNode(stationTo);
         valueGraph.putEdgeValue(stationFrom, stationTo, distance);

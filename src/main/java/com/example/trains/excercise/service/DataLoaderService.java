@@ -15,16 +15,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class DataLoaderService {
+    private static final Logger log = Logger.getLogger(DataLoaderService.class.getName());
 
     public List<String> loadMapFile(String path) throws IOException {
+        log.info(String.format("Loading file from: %s", path));
 
         FileReader filereader;
         try{
             filereader = new FileReader(path);
         } catch (FileNotFoundException e) {
+            log.severe("File not found");
             throw new MapFileNotFoundException(e.getMessage());
         }
 
@@ -43,9 +47,9 @@ public class DataLoaderService {
         List<String[]> lines = csvReader.readAll();
 
         if(CollectionUtils.isEmpty(lines)){
+            log.severe("File is empty");
             throw new MapFileEmptyException(String.format("Malformed map file: %s. Cannot load empty file.", path));
         }
-
 
         lines.forEach(l -> {
             for (String s : l) {
@@ -54,6 +58,8 @@ public class DataLoaderService {
                 }
             }
         });
+
+        log.info(String.format("CSV loaded: found %d lines", result.size()));
 
         return result;
     }

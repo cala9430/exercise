@@ -6,12 +6,16 @@ import com.google.common.graph.AbstractValueGraph;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 
 @Service
 public class ExplorerService {
 
+    private static final Logger log = Logger.getLogger(ExplorerService.class.getName());
+
     public Route findBestRoute(AbstractValueGraph<Station, Long> graphOfStations, Station from, Station to){
+        log.info(String.format("Looking for best route: [%s -> %s]", from.getName(), to.getName()));
 
         Route route = new Route();
         if(graphOfStations.hasEdgeConnecting(from, to)) {
