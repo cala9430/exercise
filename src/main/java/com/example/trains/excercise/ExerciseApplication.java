@@ -50,10 +50,23 @@ public class ExerciseApplication implements CommandLineRunner {
 	}
 
 	private boolean validateArgs(String... args){
+		if(args.length > 0){
+			log.info(String.format("Path: %s", args[0]));
+		}
+
+		if(args.length > 1){
+			log.info(String.format("From: %s", args[1]));
+		}
+
+		if(args.length > 2){
+			log.info(String.format("To: %s", args[2]));
+		}
+
 		if(args.length < 3){
 			log.severe("Usage: <pathToMap> <fromStation> <toStation>");
 			return false;
 		}
+
 		return true;
 	}
 

@@ -1,5 +1,6 @@
 package com.example.trains.excercise;
 
+import com.example.trains.excercise.exceptions.StationNotFound;
 import com.example.trains.excercise.model.Route;
 import com.example.trains.excercise.model.Station;
 import com.example.trains.excercise.service.ExplorerService;
@@ -53,5 +54,19 @@ public class ExplorerTests {
         AbstractValueGraph<Station, Long> graphModel = mapLoaderService.loadMapToGraphModel(Arrays.asList("AB5", "AC9", "BC3","CD1"));
 
         explorerService.findBestRoute(graphModel, new Station("B"), new Station("D"));
+    }
+
+    @Test(expected = StationNotFound.class)
+    public void testStationFromNotFound(){
+        AbstractValueGraph<Station, Long> graphModel = mapLoaderService.loadMapToGraphModel(Arrays.asList("AB5", "AC9", "BC3","CD1"));
+
+        explorerService.findBestRoute(graphModel, new Station("F"), new Station("A"));
+    }
+
+    @Test(expected = StationNotFound.class)
+    public void testStationToNotFound(){
+        AbstractValueGraph<Station, Long> graphModel = mapLoaderService.loadMapToGraphModel(Arrays.asList("AB5", "AC9", "BC3","CD1"));
+
+        explorerService.findBestRoute(graphModel, new Station("A"), new Station("F"));
     }
 }
