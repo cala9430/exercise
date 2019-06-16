@@ -8,22 +8,14 @@ import com.example.trains.excercise.service.MapLoaderService;
 import com.google.common.graph.AbstractValueGraph;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class PathFinderTests {
 
-    @Autowired
-    private PathFinderService pathFinderService;
+    private PathFinderService pathFinderService = new PathFinderService();
 
-    @Autowired
-    private MapLoaderService mapLoaderService;
+    private MapLoaderService mapLoaderService = new MapLoaderService();
 
     @Test
     public void testSimpleStepGraph(){

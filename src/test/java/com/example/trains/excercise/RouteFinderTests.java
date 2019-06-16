@@ -8,21 +8,14 @@ import com.google.common.graph.AbstractValueGraph;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class RouteFinderTests {
 
-    @Autowired
-    private RouteFinderService routeFinderService;
+    private RouteFinderService routeFinderService = new RouteFinderService();
 
-    @Autowired
-    private MapLoaderService mapLoaderService;
+    private MapLoaderService mapLoaderService = new MapLoaderService();
 
     @Test
     public void findSimplePathTest(){

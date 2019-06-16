@@ -15,12 +15,9 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class MapLoaderTests {
 
-    @Autowired
-    private MapLoaderService mapLoaderService;
+    private MapLoaderService mapLoaderService = new MapLoaderService();
 
     @Test
     public void loadValidMap(){

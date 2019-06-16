@@ -11,8 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Comparator;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class RouteComparatorTests {
 
     private Comparator<Route> routeComparator = new RouteComparator();

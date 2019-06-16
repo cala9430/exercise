@@ -15,15 +15,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class RoutePrinterTests {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
-    @Autowired
-    private RoutePrinterService routePrinterService;
+    private RoutePrinterService routePrinterService = new RoutePrinterService();
 
     @Before
     public void setUpStreams() {
